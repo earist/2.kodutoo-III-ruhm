@@ -90,16 +90,6 @@
 				$lastname = test_input($_POST["lastname"]);
 				}
 				
-			//salvestan eesnime ja perekonnanime andmebaasi	
-			if($firstname_error == "" && $lastname_error == ""){	
-				
-				$stmt = $mysqli->prepare("INSERT INTO users2 (firstname, lastname) VALUES (?, ?)");
-				
-				// asendame ?;? ss - s on string eesnimi, s on string perekonnanimi
-				$stmt->bind_param("ss", $firstname, $lastname);
-				$stmt->execute();
-				$stmt->close();
-			}
 			
 			//kontrollin, et epost ei ole tühi
 			if ( empty($_POST["email2"]) ) {
@@ -138,12 +128,12 @@
 				
 				echo "Võib kasutajat luua! Kasutajanimi on ".$email2." ja parool on ".$password2. "ja räsi on ".$hash;
 				
-				$stmt = $mysqli->prepare("INSERT INTO users2 (email, password) VALUES (?, ?)");
+				$stmt = $mysqli->prepare("INSERT INTO users2 (firstname, lastname, email, password) VALUES (?, ?, ?, ?)");
 				//echo $mysqli->error;
 				//echo $stmt->error;
 				
 				// asendame ?;? ss - s on string email, s on string password
-				$stmt->bind_param("ss", $email2, $hash);
+				$stmt->bind_param("ssss", $firstname, $lastname, $email2, $hash);
 				$stmt->execute();
 				$stmt->close();
 			}
